@@ -2,6 +2,8 @@
 # SPDX-License-Identifier:	GPL-2.0+
 #
 
+CROSS_COMPILE = arm-linux-
+
 VERSION = 2016
 PATCHLEVEL = 11
 SUBLEVEL =

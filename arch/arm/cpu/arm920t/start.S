@@ -61,7 +61,8 @@ copyex:
 #  define pWTCON	0x53000000
 #  define INTMSK	0x4A000008	/* Interrupt-Controller base addresses */
 #  define INTSUBMSK	0x4A00001C
-#  define CLKDIVN	0x4C000014	/* clock divisor register */
+#  define CLKDIVN	0x4c000004	/* clock divisor register */
+#  define S3C2440_MPLL_400MHZ     0x0005C011
 # endif
 
 	ldr	r0, =pWTCON
@@ -80,11 +81,37 @@ copyex:
 	str	r1, [r0]
 # endif
 
-	/* FCLK:HCLK:PCLK = 1:2:4 */
-	/* default FCLK is 120 MHz ! */
-	ldr	r0, =CLKDIVN
-	mov	r1, #3
-	str	r1, [r0]
+    /**************************
+    init LED
+    **************************/
+    ldr	r0, =0x56000050
+    ldr	r1, =0x1500
+    str	r1, [r0]
+    ldr	r0, =0x56000054
+    ldr	r1, =0xAF
+    str	r1, [r0]
+
+/* 2. 设置时钟 400MHz */
+
+    ldr r0, =0x4c000014
+    //  mov r1, #0x03;            // FCLK:HCLK:PCLK=1:2:4, HDIVN=1,PDIVN=1
+    mov r1, #0x05;            // FCLK:HCLK:PCLK=1:4:8
+    str r1, [r0]
+    /* 如果HDIVN非0，CPU的总线模式应该从“fast bus mode”变为“asynchronous bus mode” */
+    mrc p15, 0, r1, c1, c0, 0       /* 读出控制寄存器 */
+    orr r1, r1, #0xc0000000         /* 设置为“asynchronous bus mode” */
+    mcr p15, 0, r1, c1, c0, 0       /* 写入控制寄存器 */
+
+    /* MPLLCON = S3C2440_MPLL_200MHZ */
+    ldr r0, =0x4c000004
+    ldr r1, =S3C2440_MPLL_400MHZ
+    str r1, [r0]
+
+    /* 启动ICACHE */
+    mrc p15, 0, r0, c1, c0, 0   @ read control reg
+    orr r0, r0, #(1<<12)
+    mcr p15, 0, r0, c1, c0, 0   @ write it back
+
 #endif	/* CONFIG_S3C24X0 */
 
 	/*
@@ -94,6 +121,14 @@ copyex:
 #ifndef CONFIG_SKIP_LOWLEVEL_INIT
 	bl	cpu_init_crit
 #endif
+
+    /**************************
+    init LED
+    LED0 ON
+    **************************/
+    ldr	r0, =0x56000054
+    ldr	r1, =0xEF
+    str	r1, [r0]
 
 	bl	_main
 

@@ -18,6 +18,7 @@ int display_options (void)
 #if defined(BUILD_TAG)
 	printf ("\n\n%s, Build: %s\n\n", version_string, BUILD_TAG);
 #else
+	printf("Hello u-boot\n");
 	printf ("\n\n%s\n\n", version_string);
 #endif
 	return 0;

@@ -82,6 +82,15 @@ ENTRY(_main)
 #else
 	bic	sp, sp, #7	/* 8-byte alignment for ABI compliance */
 #endif
+
+    /**************************
+    init LED
+    LED0 ON
+    **************************/
+    ldr	r0, =0x56000054
+    ldr	r1, =0xCF
+    str	r1, [r0]
+
 	mov	r0, sp
 	bl	board_init_f_alloc_reserve
 	mov	sp, r0
@@ -89,8 +98,18 @@ ENTRY(_main)
 	mov	r9, r0
 	bl	board_init_f_init_reserve
 
+    /**************************
+    init LED
+    LED0 ON
+    **************************/
+    ldr	r0, =0x56000054
+    ldr	r1, =0x8F
+    str	r1, [r0]
+
 	mov	r0, #0
 	bl	board_init_f
+
+    str	r1, [r0]
 
 #if ! defined(CONFIG_SPL_BUILD)
 
