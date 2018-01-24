@@ -122,9 +122,25 @@ copyex:
 	bl	cpu_init_crit
 #endif
 
+    ldr r0, =0x30000000
+    ldr	r1, =0xDCBA4321
+    str	r1, [r0]
+    ldr	r3, [r0]
+    cmp r3, r1
+    beq equal
+
+    /*******************************
+    如果不相等，熄灭所有LED
+    *******************************/
+    ldr	r0, =0x56000054
+    ldr	r1, =0xFF
+    str	r1, [r0]
+
+    bl _main
+
+equal:
     /**************************
-    init LED
-    LED0 ON
+    相等则亮第一个灯
     **************************/
     ldr	r0, =0x56000054
     ldr	r1, =0xEF

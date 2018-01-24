@@ -3,13 +3,16 @@ OUTPUT_ARCH(arm)
 ENTRY(_start)
 SECTIONS
 {
- . = 0x00000000;
+ . = 0;
  . = ALIGN(4);
  .text :
  {
   *(.__image_copy_start)
   *(.vectors)
   arch/arm/cpu/arm920t/start.o (.text*)
+        arch/arm/lib/crt0.o (.text*)
+        arch/arm/lib/vectors.o (.text*)
+        board/samsung/smdk2440/built-in.o (.text*)
   *(.text*)
  }
  . = ALIGN(4);

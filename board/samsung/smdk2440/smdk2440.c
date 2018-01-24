@@ -99,11 +99,6 @@ int board_early_init_f(void)
 	writel(0x002AFAAA, &gpio->gphcon);
 	writel(0x000007FF, &gpio->gphup);
 
-	/***********************************************
-	Test the RAM read and write
-	***********************************************/
-	TestRAM();
-
 	return 0;
 }
 
@@ -149,25 +144,4 @@ ulong board_flash_get_legacy(ulong base, int banknum, flash_info_t *info)
 	info->chipwidth = FLASH_CFI_BY16;
 	info->interface = FLASH_CFI_X16;
 	return 1;
-}
-
-static void LED_Set(LED_No Set_LED_No, LED_Status Set_LED_Status)
-{
-	struct s3c24x0_gpio * const gpio = s3c24x0_get_base_gpio();
-	if(Set_LED_Status == LED_OFF)
-	{
-		gpio->gpfdat |= (1 << (Set_LED_No + 4));
-	}
-	else if(Set_LED_Status == LED_ON)
-	{
-		gpio->gpfdat &= ~(1 << (Set_LED_No + 4));
-	}
-}
-
-static void TestRAM(void)
-{
-	volatile unsigned long *RAM_Test = (volatile unsigned long *)0x30008000;
-	*RAM_Test = 0x1234ABCD;
-	if(*RAM_Test == 0x1234ABCD)
-		LED_Set(LED_0,LED_OFF);
 }

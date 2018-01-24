@@ -14,7 +14,9 @@ obj-y	+= vectors_m.o crt0.o
 else ifdef CONFIG_ARM64
 obj-y	+= crt0_64.o
 else
-obj-y	+= vectors.o crt0.o
+#obj-y	+= vectors.o crt0.o
+#不链接到built-in.o中，单独链接
+extra-y	+= vectors.o crt0.o
 endif
 
 ifndef CONFIG_SPL_BUILD

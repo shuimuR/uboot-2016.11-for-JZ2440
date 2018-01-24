@@ -1,0 +1,26 @@
+---- _start Matches (25 in 16 files) ----
+Board_f.c (common):	gd->mon_len = (ulong)&__bss_end - (ulong)_start;
+Board_f.c (common):	gd->mon_len = (ulong)(&__bss_end) - (ulong)(&_start);
+Board_r.c (common):	monitor_flash_len = (ulong)&_end - (ulong)&_start;
+crt0.S (examples\api):	.globl _start
+crt0.S (examples\api):_start:
+crt0.S (examples\api):	.globl _start
+crt0.S (examples\api):_start:
+Exynos-uboot-spl.lds (board\samsung\common):ENTRY(_start)
+Makefile:		--defsym=_start=$(CONFIG_SYS_TEXT_BASE) \
+Nds32.lds (examples\standalone):ENTRY(_start)
+Ppc_asm.tmpl (include):	.long	hdlr - _start + _START_OFFSET;		\
+Ppc_asm.tmpl (include):	.long	int_return - _start + _START_OFFSET;	\
+Ppc_asm.tmpl (include):	.long	transfer_to_handler - _start + _START_OFFSET
+Readme:		used by SPL from _start to __bss_end does not exceed it.
+Remote.c (tools\gdb):					tttttttt = address of symbol "_start"
+Sections.h (include\asm-generic):extern void _start(void);
+Sparc.lds (examples\standalone):ENTRY(_start)
+start.S (arch\arm\cpu\arm920t):	ldr	r0, =_start
+U-boot-spl.lds (arch\arm\cpu):ENTRY(_start)
+U-boot-spl.lds (arch\arm\cpu):ASSERT(__bss_end - _start < (CONFIG_SPL_MAX_FOOTPRINT), \
+U-boot.lds (arch\arm\cpu):ENTRY(_start)
+vectors.S (arch\arm\lib): * Symbol _start is referenced elsewhere, so make it global
+vectors.S (arch\arm\lib):.globl _start
+vectors.S (arch\arm\lib):_start:
+vectors_m.S (arch\arm\lib):ENTRY(_start)
