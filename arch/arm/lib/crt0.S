@@ -91,16 +91,6 @@ ENTRY(_main)
     ldr	r0, =0x56000054
     ldr	r1, =0xCF
     str	r1, [r0]
-    
-#if 0
-	mov	r0, sp
-	bl	board_init_f_alloc_reserve
-	mov	sp, r0
-
-	/* set up gd here, outside any C code */
-	mov	r9, r0
-	bl	board_init_f_init_reserve
-#endif
 
 	bl uart0_init
 
@@ -147,11 +137,21 @@ ENTRY(_main)
     ldr r0, =67                  //C
 	bl putc_for_test
 
+    ldr pc, =START_ON_RAM			//start run on RAM
+START_ON_RAM:
+    mov	r0, sp
+    bl	board_init_f_alloc_reserve
+    mov	sp, r0
+
+    /* set up gd here, outside any C code */
+    mov	r9, r0
+    bl	board_init_f_init_reserve
+
     ldr r0, =68                     //D
 	bl putc_for_test
 
-    ldr r0, =69                     //E
-	bl putc_for_test
+    mov	r0, #0
+	bl	board_init_f
 
     /**************************
     init LED
@@ -161,14 +161,12 @@ ENTRY(_main)
     ldr	r1, =0x8F
     str	r1, [r0]
 
+    ldr r0, =69                     //E
+	bl putc_for_test
+
 DeadLoop:
     ldr r0, =0
     b DeadLoop
-
-	ldr pc, =START_ON_RAM			//��ת��RAMִ��
-START_ON_RAM:
-    mov	r0, #0
-	bl	board_init_f
 
     str	r1, [r0]
 
