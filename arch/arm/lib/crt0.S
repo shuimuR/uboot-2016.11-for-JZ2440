@@ -91,16 +91,6 @@ ENTRY(_main)
     ldr	r0, =0x56000054
     ldr	r1, =0xCF
     str	r1, [r0]
-    
-#if 0
-	mov	r0, sp
-	bl	board_init_f_alloc_reserve
-	mov	sp, r0
-
-	/* set up gd here, outside any C code */
-	mov	r9, r0
-	bl	board_init_f_init_reserve
-#endif
 
 	bl uart0_init
 
@@ -147,12 +137,30 @@ ENTRY(_main)
     ldr r0, =67                  //C
 	bl putc_for_test
 
+    ldr pc, =START_ON_RAM			//start run on RAM
+START_ON_RAM:
+    mov	r0, sp
+    bl	board_init_f_alloc_reserve
+    mov	sp, r0
+
+    /* set up gd here, outside any C code */
+    mov	r9, r0
+    bl	board_init_f_init_reserve
+
+#if 1
     ldr r0, =68                     //D
 	bl putc_for_test
+#endif
+    mov	r0, #0
+	bl	board_init_f
 
-    ldr r0, =69                     //E
-	bl putc_for_test
+    /***************************
+    remember the r0 r1 values
+    ***************************/
+    mov r6, r0
+    mov r7, r1
 
+#if 1
     /**************************
     init LED
     LED0 ON
@@ -161,16 +169,23 @@ ENTRY(_main)
     ldr	r1, =0x8F
     str	r1, [r0]
 
+    ldr r0, =69                     //E
+	bl putc_for_test
+#endif
+
+#if 0
 DeadLoop:
     ldr r0, =0
     b DeadLoop
+#endif
 
-	ldr pc, =START_ON_RAM			//��ת��RAMִ��
-START_ON_RAM:
-    mov	r0, #0
-	bl	board_init_f
+    mov r0, r6
+    mov r1, r7
 
     str	r1, [r0]
+
+    ldr r0, =70                     //F
+	bl putc_for_test
 
 #if ! defined(CONFIG_SPL_BUILD)
 
@@ -191,6 +206,9 @@ START_ON_RAM:
 	ldr	r9, [r9, #GD_BD]		/* r9 = gd->bd */
 	sub	r9, r9, #GD_SIZE		/* new GD is below bd */
 
+    ldr r0, =71                     //G
+	bl putc_for_test
+
 	adr	lr, here
 	ldr	r0, [r9, #GD_RELOC_OFF]		/* r0 = gd->reloc_off */
 	add	lr, lr, r0
@@ -198,7 +216,16 @@ START_ON_RAM:
 	orr	lr, #1				/* As required by Thumb-only */
 #endif
 	ldr	r0, [r9, #GD_RELOCADDR]		/* r0 = gd->relocaddr */
-    b	relocate_code
+
+    ldr r0, =72                     //H
+	bl putc_for_test
+
+    //b	relocate_code
+    ldr	r2, =__rel_dyn_start	/* r2 <- SRC &__rel_dyn_start */
+	ldr	r3, =__rel_dyn_end	/* r3 <- SRC &__rel_dyn_end */
+
+    ldr r0, =73                     //I
+	bl putc_for_test
 here:
 /*
  * now relocate vectors
@@ -244,6 +271,9 @@ clbss_l:cmp	r0, r1			/* while not at end of BSS */
 
 #endif
 
+    ldr r0, =74                     //J
+    bl putc_for_test
+
 #if ! defined(CONFIG_SPL_BUILD)
 	bl coloured_LED_init
 	bl red_led_on
@@ -256,6 +286,8 @@ clbss_l:cmp	r0, r1			/* while not at end of BSS */
 	ldr	lr, =board_init_r	/* this is auto-relocated! */
 	bx	lr
 #else
+    ldr r0, =75                     //K
+    bl putc_for_test
 	ldr	pc, =board_init_r	/* this is auto-relocated! */
 #endif
 	/* we should not return here. */
