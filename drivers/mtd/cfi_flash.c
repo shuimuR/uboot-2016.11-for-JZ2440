@@ -366,18 +366,18 @@ void flash_write_cmd (flash_info_t * info, flash_sect_t sect,
 	flash_make_cmd (info, cmd, &cword);
 	switch (info->portwidth) {
 	case FLASH_CFI_8BIT:
-		debug ("fwc addr %p cmd %x %x 8bit x %d bit\n", addr, cmd,
+		debug("fwc addr %p cmd %x %x 8bit x %d bit\n", addr, cmd,
 		       cword.w8, info->chipwidth << CFI_FLASH_SHIFT_WIDTH);
 		flash_write8(cword.w8, addr);
 		break;
 	case FLASH_CFI_16BIT:
-		debug ("fwc addr %p cmd %x %4.4x 16bit x %d bit\n", addr,
+		debug("fwc addr %p cmd %x %4.4x 16bit x %d bit\n", addr,
 		       cmd, cword.w16,
 		       info->chipwidth << CFI_FLASH_SHIFT_WIDTH);
 		flash_write16(cword.w16, addr);
 		break;
 	case FLASH_CFI_32BIT:
-		debug ("fwc addr %p cmd %x %8.8x 32bit x %d bit\n", addr,
+		debug("fwc addr %p cmd %x %8.8x 32bit x %d bit\n", addr,
 		       cmd, cword.w32,
 		       info->chipwidth << CFI_FLASH_SHIFT_WIDTH);
 		flash_write32(cword.w32, addr);
@@ -389,7 +389,7 @@ void flash_write_cmd (flash_info_t * info, flash_sect_t sect,
 
 			print_longlong (str, cword.w64);
 
-			debug ("fwrite addr %p cmd %x %s 64 bit x %d bit\n",
+			debug("fwrite addr %p cmd %x %s 64 bit x %d bit\n",
 			       addr, cmd, str,
 			       info->chipwidth << CFI_FLASH_SHIFT_WIDTH);
 		}
@@ -1783,7 +1783,6 @@ static void flash_read_jedec_ids (flash_info_t * info)
 static int flash_detect_legacy(phys_addr_t base, int banknum)
 {
 	flash_info_t *info = &flash_info[banknum];
-
 	if (board_flash_get_legacy(base, banknum, info)) {
 		/* board code may have filled info completely. If not, we
 		   use JEDEC ID probing. */

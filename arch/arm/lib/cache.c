@@ -34,7 +34,7 @@ __weak void flush_dcache_all(void)
  */
 __weak void enable_caches(void)
 {
-	puts("WARNING: Caches not enabled\n");
+	//puts("WARNING: Caches not enabled\n");
 }
 
 __weak void invalidate_dcache_range(unsigned long start, unsigned long stop)

@@ -880,7 +880,7 @@ static int nand_wait(struct mtd_info *mtd, struct nand_chip *chip)
 
  	u32 timer = (CONFIG_SYS_HZ * timeo) / 1000;
  	u32 time_start;
- 
+
  	time_start = get_timer(0);
  	while (get_timer(time_start) < timer) {
 		if (chip->dev_ready) {
@@ -2382,7 +2382,6 @@ static int nand_do_write_ops(struct mtd_info *mtd, loff_t to,
 			   __func__);
 		return -EINVAL;
 	}
-
 	column = to & (mtd->writesize - 1);
 
 	chipnr = (int)(to >> chip->chip_shift);
@@ -2408,7 +2407,6 @@ static int nand_do_write_ops(struct mtd_info *mtd, loff_t to,
 		ret = -EINVAL;
 		goto err_out;
 	}
-
 	while (1) {
 		int bytes = mtd->writesize;
 		int cached = writelen > bytes && page != blockmask;

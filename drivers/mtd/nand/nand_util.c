@@ -187,7 +187,7 @@ int nand_erase_opts(struct mtd_info *mtd,
 
 #define NAND_CMD_LOCK_TIGHT     0x2c
 #define NAND_CMD_LOCK_STATUS    0x7a
- 
+
 /******************************************************************************
  * Support for locking / unlocking operations of some NAND devices
  *****************************************************************************/
@@ -621,7 +621,9 @@ int nand_write_skip_bad(struct mtd_info *mtd, loff_t offset, size_t *length,
 		rval = nand_write(mtd, offset, length, buffer);
 
 		if ((flags & WITH_WR_VERIFY) && !rval)
+		{
 			rval = nand_verify(mtd, offset, *length, buffer);
+		}
 
 		if (rval == 0)
 			return 0;
