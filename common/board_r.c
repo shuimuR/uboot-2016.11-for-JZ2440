@@ -73,6 +73,10 @@ DECLARE_GLOBAL_DATA_PTR;
 extern int prom_init(void);
 #endif
 
+#ifdef CONFIG_DRIVER_DM9000
+	extern int dm9000_init(struct eth_device *dev, bd_t *bd);
+#endif
+
 ulong monitor_flash_len;
 
 __weak int board_flash_wp_on(void)
@@ -655,6 +659,9 @@ static int initr_net(void)
 #if defined(CONFIG_RESET_PHY_R)
 	debug("Reset Ethernet PHY\n");
 	reset_phy();
+#endif
+#ifdef CONFIG_DRIVER_DM9000
+	dm9000_init(NULL, gd->bd);
 #endif
 	return 0;
 }

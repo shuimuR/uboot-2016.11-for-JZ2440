@@ -947,8 +947,8 @@ main:
 	.ascii	"bi_intfreq\000"
 .LASF54:
 	.ascii	"net_state\000"
-.LASF28:
-	.ascii	"bi_ethspeed\000"
+.LASF57:
+	.ascii	"/home/shuimu/more/uboot/uboot-2016.11-for-JZ2440\000"
 .LASF26:
 	.ascii	"bi_ip_addr\000"
 .LASF38:
@@ -1025,8 +1025,6 @@ main:
 	.ascii	"write_hwaddr\000"
 .LASF46:
 	.ascii	"next\000"
-.LASF57:
-	.ascii	"/home/shuimu/more/uboot/uboot-2016.11\000"
 .LASF14:
 	.ascii	"size\000"
 .LASF52:
@@ -1035,5 +1033,7 @@ main:
 	.ascii	"long long unsigned int\000"
 .LASF56:
 	.ascii	"lib/asm-offsets.c\000"
+.LASF28:
+	.ascii	"bi_ethspeed\000"
 	.ident	"GCC: (ctng-1.8.1-FA) 4.5.1"
 	.section	.note.GNU-stack,"",%progbits

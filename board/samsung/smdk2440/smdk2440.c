@@ -43,9 +43,6 @@ DECLARE_GLOBAL_DATA_PTR;
 typedef enum{LED_0, LED_1, LED_2}LED_No;
 typedef enum{LED_OFF, LED_ON}LED_Status;
 
-static void LED_Set(LED_No Set_LED_No, LED_Status Set_LED_Status);
-static void TestRAM(void);
-
 static inline void pll_delay(unsigned long loops)
 {
 	__asm__ volatile ("1:\n"
@@ -130,6 +127,11 @@ int board_eth_init(bd_t *bis)
 #ifdef CONFIG_CS8900
 	rc = cs8900_initialize(0, CONFIG_CS8900_BASE);
 #endif
+
+#ifdef CONFIG_DRIVER_DM9000
+	rc = dm9000_initialize(bis);
+#endif
+
 	return rc;
 }
 #endif
