@@ -79,6 +79,8 @@ extern int prom_init(void);
 
 ulong monitor_flash_len;
 
+extern int mtdparts_init(void);
+
 __weak int board_flash_wp_on(void)
 {
 	/*
@@ -976,6 +978,7 @@ init_fnc_t init_sequence_r[] = {
 #if defined(CONFIG_SPARC)
 	prom_init,
 #endif
+	mtdparts_init,
 	run_main_loop,
 };
 
