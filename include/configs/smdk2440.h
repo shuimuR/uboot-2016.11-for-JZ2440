@@ -164,14 +164,15 @@
 #define CONFIG_ENV_SIZE		0x00020000
 #endif
 
+#define CONFIG_CMD_NAND_YAFFS
 #define CONFIG_CMD_MTDPARTS
 #define CONFIG_MTD_DEVICE
 #define CONFIG_MTD_PARTITIONS
 #define MTDIDS_DEFAULT		"nand0=jz2440"
-#define MTDPARTS_DEFAULT	"mtdparts=jz2440:256k(u-boot),"\
+#define MTDPARTS_DEFAULT	"mtdparts=jz2440:512k(u-boot),"\
 							"128k(params),"\
 							"2m(kernel),"\
-							"-(rootfs)"	
+							"-(rootfs)"
 
 /*
  * Size of malloc() pool
