@@ -54,11 +54,20 @@
 /************************************************************
  * USB support (currently only works with D-cache off)
  ************************************************************/
- #if 0
+#define CONFIG_CMD_USB
 #define CONFIG_USB_OHCI
 #define CONFIG_USB_OHCI_S3C24XX
+#if 0
 #define CONFIG_DOS_PARTITION
 #endif
+
+/************************************************************
+support IRQ, for LED
+The cycle is 1s
+************************************************************/
+#define CONFIG_USE_IRQ
+#define CONFIG_STACKSIZE_IRQ (4 * 1024)
+#define CONFIG_STACKSIZE_FIQ (4 * 1024)
 
 /************************************************************
  * RTC
