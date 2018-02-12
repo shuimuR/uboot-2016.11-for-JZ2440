@@ -54,10 +54,10 @@
 /************************************************************
  * USB support (currently only works with D-cache off)
  ************************************************************/
+ #if 0
 #define CONFIG_CMD_USB
 #define CONFIG_USB_OHCI
 #define CONFIG_USB_OHCI_S3C24XX
-#if 0
 #define CONFIG_DOS_PARTITION
 #endif
 

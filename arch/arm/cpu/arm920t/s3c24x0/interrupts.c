@@ -36,7 +36,7 @@ void do_irq (struct pt_regs *pt_regs)
 {
 	struct s3c24x0_interrupt *irq = s3c24x0_get_base_interrupt();
 	struct s3c24x0_gpio *IO_Base = s3c24x0_get_base_gpio();
-	u_int32_t ClearSourceTemp = 0; 
+	u_int32_t ClearSourceTemp = 0;
 	u_int32_t intpnd = readl(&irq->intpnd);
 	static u_int8_t TimerCount = 0;
 	static u_int8_t LED_Flag = 0;
@@ -70,7 +70,7 @@ void do_irq (struct pt_regs *pt_regs)
 
 void LED_Timer_Init(void)
 {
-	printf("%s\n", __func__);
+	//printf("%s\n", __func__);
 	struct s3c24x0_timers *timers = s3c24x0_get_base_timers();
 	struct s3c24x0_interrupt *S3C_Intr = s3c24x0_get_base_interrupt();
 	struct s3c24x0_gpio *IO_Base = s3c24x0_get_base_gpio();
@@ -93,16 +93,16 @@ void LED_Timer_Init(void)
 	tmr = (readl(&timers->tcon) & ~0x0700000) | 0x0600000;
 	writel(tmr, &timers->tcon);
 
-	printf("enable timer4 interrupt\n");
+	//printf("enable timer4 interrupt\n");
 	//IRQ
 	IntrTemp = readl(&S3C_Intr->intmod) & (~TIMER_MASK);
 	writel(IntrTemp, &S3C_Intr->intmod);
-	
+
 	//enable interrupt
 	IntrTemp = readl(&S3C_Intr->intmsk) & (~TIMER_MASK);
 	writel(IntrTemp, &S3C_Intr->intmsk);
 
-	printf("start timer4\n");
+	//printf("start timer4\n");
 	/* auto load, start timer 4 */
 	tmr = (tmr & ~0x0700000) | 0x0500000;
 	writel(tmr, &timers->tcon);
