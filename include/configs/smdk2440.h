@@ -101,7 +101,7 @@ The cycle is 1s
 /* autoboot */
 #define CONFIG_BOOT_RETRY_TIME	-1
 #define CONFIG_RESET_TO_RETRY
-#define CONFIG_BOOTARGS		"console=ttySAC0 root=/dev/mtdblock3"
+#define CONFIG_BOOTARGS		"console=ttySAC0,115200 root=/dev/mtdblock3"
 #define CONFIG_BOOTCOMMAND	"nand read 30000000 kernel 0x200000;bootm 30000000"
 
 #define CONFIG_NETMASK		255.255.255.0
@@ -180,7 +180,7 @@ The cycle is 1s
 #define MTDIDS_DEFAULT		"nand0=jz2440"
 #define MTDPARTS_DEFAULT	"mtdparts=jz2440:512k(u-boot),"\
 							"128k(params),"\
-							"2m(kernel),"\
+							"4m(kernel),"\
 							"-(rootfs)"
 
 /*
